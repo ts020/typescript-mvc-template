@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="resource/style.css">
+</head>
+<body>
+<h1>SPA REACTIVE MVC TEMPLATE</h1>
+    <div id="nameLabel"></div>
+    <input type="text" id="nameInput" onkeyup="controller.showName(this.value)" />
+</div>
+</body>
+<script type="text/javascript" src="resource/App.js"></script>
+<script type="text/javascript">
+    var controller = new app.Controller({
+        name : "Hello World"
+    });
+</script>
+</html>
