@@ -24,13 +24,12 @@ TypeScriptでReactiveなテンプレートです。
 
 ##Edit
 **編集するのは主に下記のファイルになります。**
-file     | role
--------- | ---
-dev/ts/App.ts | Controller 
-dev/ts/Model.ts| Model
-dev/ts/View.ts | View
-dev/less/style.less | style
-pub/index.html | html
+
+- dev/ts/App.ts | Controller
+- dev/ts/Model.ts| Model
+- dev/ts/View.ts | View
+- dev/less/style.less | style
+- pub/index.html | html
 
 ###gulp compile
 >**project directory**
