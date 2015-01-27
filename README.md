@@ -39,12 +39,13 @@ TypeScriptでReactiveなテンプレートです。
 
 ## Sequence
 サンプルにおけるリアクティブの流れです。
-```sequence
-input.onkeyup->controller:showName(value)
-controller->model:setName(value)
-model->modelBase:setProperty("name", value)
-modelBase->modelBase:lazyTrigger("change")
-Note right of modelBase: 以後16ミリ秒後までchangeイベントのリクエスト無視する
-modelBase->view:update()
-Note right of view: 変更のあるmodelの値のみを書き換える
-```
+
+1. input.onkeyup->controller:showName(value)
+2. controller->model:setName(value)
+3. model->modelBase:setProperty("name", value)
+4. modelBase->modelBase:lazyTrigger("change")
+   以後16ミリ秒後までchangeイベントのリクエスト無視する
+5. 16ミリ秒後イベント送出
+6. modelBase->view:update()
+   変更のあるmodelの値のみを書き換える
+
