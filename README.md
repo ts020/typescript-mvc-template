@@ -9,16 +9,20 @@ TypeScriptでReactiveなテンプレートです。
 
 ### Global Library Install
 >**typeScript install**
+
 >npm i typescript -g
 
 >**gulp install**
+
 >npm i gulp -g
 
 >**less install**
+
 >npm i less -g
 
 ### Package Install
 >**module install**
+
 >npm i
 
 
