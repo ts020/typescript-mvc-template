@@ -4,8 +4,6 @@ TypeScriptでReactiveなテンプレートです。
 
 
 ## Install
-*なお、macの場合は、gulp-notifierでpermission Errorが起こるので*
-*package Installの際には sudoをつけてください。*
 
 ### Global Library Install
 >**typeScript install**
@@ -38,8 +36,6 @@ TypeScriptでReactiveなテンプレートです。
 ###gulp compile
 >**project directory**
 >gulp
-
-*macの場合は、sudoをつける*
 
 ## Sequence
 サンプルにおけるリアクティブの流れです。
