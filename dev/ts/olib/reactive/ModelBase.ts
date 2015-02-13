@@ -1,6 +1,3 @@
-/**
- * Created by uu071639 on 2014/12/03.
- */
 ///<reference path="../core/Observer.ts" />
 ///<reference path="../core/Identifier.ts" />
 ///<reference path="../utils/Util.ts" />
