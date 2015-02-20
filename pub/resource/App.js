@@ -1,41 +1,31 @@
 var olib;
 (function (olib) {
-    olib.frameRateSec = Math.floor(1000 / 60);
-    olib.asyncQueList;
+    olib.queMap = {};
+    olib.queStarted = false;
+    olib.count = 0;
     function async(handler, queID) {
         if (queID === void 0) { queID = null; }
-        if (olib.asyncQueList == null) {
-            olib.asyncQueList = [];
+        if (olib.queMap[queID]) {
+            olib.queMap[queID].handler = handler;
+            return;
         }
-        if (queID) {
-            olib.asyncQueList = olib.asyncQueList.filter(function (que) {
-                return que.id != queID;
-            });
-        }
-        olib.asyncQueList.push({
-            handler: handler,
-            id: queID
-        });
-        startQue();
-    }
-    olib.async = async;
-    olib.queStarted = false;
-    olib.timerID = -1;
-    function startQue() {
+        olib.queMap[queID || Date.now() + "_" + olib.count] = {
+            handler: handler
+        };
+        olib.count++;
         if (!olib.queStarted) {
             olib.queStarted = true;
-            olib.timerID = setInterval(function () {
-                if (olib.asyncQueList.length == 0) {
-                    clearInterval(olib.timerID);
-                    olib.queStarted = false;
-                }
-                else {
-                    olib.asyncQueList.shift().handler();
-                }
-            }, olib.frameRateSec);
+            window.requestAnimationFrame(function () {
+                var keys = Object.keys(olib.queMap);
+                keys.forEach(function (key) {
+                    olib.queMap[key].handler();
+                });
+                olib.queMap = {};
+                olib.queStarted = false;
+            });
         }
     }
-    olib.startQue = startQue;
+    olib.async = async;
 })(olib || (olib = {}));
 var olib;
 (function (olib) {

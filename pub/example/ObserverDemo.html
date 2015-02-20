@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h1>LazyTrigger</h1>
+<h2>1フレーム内でコール回数実行</h2>
+<div id="rawLoop"></div>
+<h2>Observer.lazyTrigger 1フレーム毎にコールした回数実行</h2>
+<div id="lazyTriggerLoop"></div>
+<h2>Observer.lazyTrigger １回だけ実行</h2>
+<div id="lazyTriggerOne"></div>
+</body>
+<script type="text/javascript" src="../resource/App.js"></script>
+<script type="text/javascript">
+    var count = 0;
+    var lazyCount = 0;
+    var lazyLoopCount = 0;
+    var lastdate = 0;
+
+    var observer = new olib.Observer();
+
+    observer.on("move",function (e){
+        lazyCount++;
+        document.getElementById("lazyTriggerOne").innerHTML =
+                "x : " + e.data.x + ", y :" + e.data.y + "<br>" +
+                "ループ終了時から"+ (Date.now()-lastdate) + "m秒後に<br>" +
+                lazyCount + "回実行"
+
+        ;
+
+    });
+    var loopObserver = new olib.Observer();
+    var first = 0;
+    loopObserver.on("move",function (e){
+        lazyLoopCount++;
+        if(first == 0) {
+            first = Date.now();
+        }
+        document.getElementById("lazyTriggerLoop").innerHTML =
+                "x : " + e.data.x + ", y :" + e.data.y+ "<br>" +
+                "ループ終了後 : "+(first-lastdate)+"m秒後から"+ (Date.now()-first) + "m秒間で<br>" +
+                lazyLoopCount + "回実行";
+
+    });
+
+
+    function move(e) {
+        count++;
+        lastdate = Date.now();
+        document.getElementById("rawLoop").innerHTML =
+                "x : " + e.x + ", y :" + e.y+ "<br>ループ開始から :" +
+                (Date.now() - now) + "m秒間<br>" +
+                count + "回実行";
+    }
+    var now = Date.now();
+    for(var i = 0; i < 100000; i++) {
+        var value = {x:Math.random(), y:Math.random()};
+        lastdate= Date.now();
+        //リアルタイムに実行される
+        move(value);
+
+        //1フレーム後に１回だけイベントが発行される
+        observer.lazyTrigger("move",value, "__move");
+
+        //実行回数１フレーム毎にイベントが発行される
+        loopObserver.lazyTrigger("move",value);
+    }
+
+</script>
+</html>

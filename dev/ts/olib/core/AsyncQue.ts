@@ -1,37 +1,27 @@
 module olib {
-    export var frameRateSec = Math.floor(1000 / 60);
-    export var asyncQueList:{handler:Function; id:string}[];
+	export var queMap:any = {};
+	export var queStarted:boolean = false;
+	export var count:number = 0;
 
     export function async(handler:Function, queID:string = null):void {
-        if (asyncQueList == null) {
-            asyncQueList = [];
+        if (queMap[queID]) {
+	        queMap[queID].handler = handler;
+	        return;
         }
-        if (queID) {
-            asyncQueList = asyncQueList.filter(function (que:{handler:Function; id:string}) {
-                return que.id != queID
-            });
-        }
-        asyncQueList.push({
-            handler: handler,
-            id: queID
-        });
-        startQue();
-    }
-
-    export var queStarted:boolean = false;
-    export var timerID:number = -1;
-
-    export function startQue() {
-        if (!queStarted) {
-            queStarted = true;
-            timerID = setInterval(function () {
-                if (asyncQueList.length == 0) {
-                    clearInterval(timerID);
-                    queStarted = false;
-                } else {
-                    asyncQueList.shift().handler();
-                }
-            }, frameRateSec);
-        }
+	    queMap[queID || Date.now() + "_" + count] = {
+		    handler: handler
+	    };
+	    count++;
+	    if (!queStarted) {
+		    queStarted = true;
+		    window.requestAnimationFrame(()=>{
+			    var keys = Object.keys(queMap);
+			    keys.forEach(function(key){
+				    queMap[key].handler();
+			    });
+			    queMap = {};
+			    queStarted = false;
+		    });
+	    }
     }
 }
