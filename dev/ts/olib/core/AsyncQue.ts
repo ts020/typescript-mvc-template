@@ -4,10 +4,6 @@ module olib {
 	export var count:number = 0;
 
     export function async(handler:Function, queID:string = null):void {
-        if (queMap[queID]) {
-	        queMap[queID].handler = handler;
-	        return;
-        }
 	    queMap[queID || Date.now() + "_" + count] = {
 		    handler: handler
 	    };
@@ -18,8 +14,8 @@ module olib {
 			    var keys = Object.keys(queMap);
 			    keys.forEach(function(key){
 				    queMap[key].handler();
+				    delete queMap[key];
 			    });
-			    queMap = {};
 			    queStarted = false;
 		    });
 	    }
