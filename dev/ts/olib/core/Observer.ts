@@ -8,10 +8,15 @@ module olib {
 
     export class Observer implements IObserver {
 
-        private listeners:any = {};
+        private listeners:any;
+        
+        constructor() {
+		    this.listeners = {};
+	    }
 
         protected getListener(type:string):Function[] {
-            return this.listeners[type] || (this.listeners[type] = []);
+	        if(!this.listeners[type])this.listeners[type] = []
+            return this.listeners[type];
         }
 
         protected contain(type:string, handler:Function):boolean {
