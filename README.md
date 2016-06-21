@@ -1,6 +1,5 @@
 # reactive_template
-ライブラリ外部ライブラリに依存しない
-TypeScriptでReactiveなテンプレートです。
+外部ライブラリに依存しないシンプルなMVCテンプレートです。
 
 
 ## Install
